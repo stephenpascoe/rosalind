@@ -9,4 +9,6 @@ import Lib
 main :: IO ()
 main = do
   input <- BS.getContents
-  BS.putStrLn $ BS.map transcribe input
+  let
+    strands = BS.words input
+  BS.putStrLn $ BS.reverse (BS.map complement (head strands))
