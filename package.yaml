@@ -27,27 +27,9 @@ library:
   source-dirs: src
 
 executables:
-  rosalind-dna:
+  rosalind:
     main:                Main.hs
-    source-dirs:         app/dna
-    ghc-options:
-    - -threaded
-    - -rtsopts
-    - -with-rtsopts=-N
-    dependencies:
-    - rosalind
-  rosalind-rna:
-    main:                Main.hs
-    source-dirs:         app/rna
-    ghc-options:
-    - -threaded
-    - -rtsopts
-    - -with-rtsopts=-N
-    dependencies:
-    - rosalind
-  rosalind-recv:
-    main:                Main.hs
-    source-dirs:         app/recv
+    source-dirs:         app
     ghc-options:
     - -threaded
     - -rtsopts
