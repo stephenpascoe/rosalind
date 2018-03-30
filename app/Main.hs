@@ -25,7 +25,7 @@ main = do
 selectProblem :: String -> Maybe Problem
 selectProblem "dna" = Just dna
 selectProblem "rna" = Just rna
-selectProblem "recv" = Just recv
+selectProblem "revc" = Just revc
 selectProblem _      = Nothing
 
 

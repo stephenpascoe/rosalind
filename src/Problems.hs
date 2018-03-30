@@ -3,20 +3,23 @@
 module Problems
     ( dna
     , rna
-    , recv
+    , revc
     , Problem
     ) where
 
 import qualified Data.ByteString.Lazy.Char8 as BS
 import qualified Data.ByteString.Builder as B
 import Data.Monoid
+import Data.Maybe
 
 import Lib
 
 type Problem = BS.ByteString -> BS.ByteString
 
 dna :: Problem
-dna input = let counts = countBases input
+dna input = maybe "Not a DNA sequence" f (toDnaSequence input)
+  where
+    f seq = let counts = countBases seq
             in B.toLazyByteString ( B.integerDec (aCount counts) <> " " <>
                                     B.integerDec (cCount counts) <> " " <>
                                     B.integerDec (gCount counts) <> " " <>
@@ -24,8 +27,17 @@ dna input = let counts = countBases input
                                   )
 
 rna :: Problem
-rna input = BS.map transcribe input
+rna input =
+  let
+    result = do
+      seq <- toDnaSequence input
+      return $ seqAsByteString . transcribe $ seq
+  in
+    case result of
+      Nothing -> "Something went wrong"
+      Just output -> BS.fromStrict output
 
-recv :: Problem
-recv input = let strands = BS.words input
-             in  BS.reverse (BS.map complement (head strands))
+revc :: Problem
+revc input = let strands = BS.words input
+                 f = BS.reverse . BS.fromStrict . seqAsByteString . complement
+             in maybe "Not a Strand" f (toDnaSequence (head strands))

@@ -47,3 +47,4 @@ tests:
     - -with-rtsopts=-N
     dependencies:
     - rosalind
+    - hspec >= 2.4.8 && < 2.5
