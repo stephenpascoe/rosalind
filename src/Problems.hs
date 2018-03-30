@@ -1,16 +1,18 @@
 {-# LANGUAGE OverloadedStrings #-}
 
 module Problems
-    ( dna
+    ( Problem
+    , dna
     , rna
     , revc
-    , Problem
+    , fib
     ) where
 
 import qualified Data.ByteString.Lazy.Char8 as BS
 import qualified Data.ByteString.Builder as B
 import Data.Monoid
 import Data.Maybe
+import Safe
 
 import Lib
 
@@ -41,3 +43,17 @@ revc :: Problem
 revc input = let strands = BS.words input
                  f = BS.reverse . BS.fromStrict . seqAsByteString . complement
              in maybe "Not a Strand" f (toDnaSequence (head strands))
+
+
+fib :: Problem
+fib input = case resultMay of
+              Just pairs -> B.toLazyByteString $ B.intDec pairs
+              Nothing -> "ERROR"
+  where
+    args = BS.words input
+    resultMay = do
+      nStr <- headMay args
+      kStr <- atMay args 1
+      (n, _) <- BS.readInt nStr
+      (k, _) <- BS.readInt kStr
+      return $ (rabbitPairs k) !! (n - 1)

@@ -5,6 +5,7 @@ module Main where
 import System.Environment
 import Data.Maybe
 import qualified Data.ByteString.Lazy.Char8 as BS
+import Safe
 
 import Problems
 
@@ -12,7 +13,7 @@ main :: IO ()
 main = do
   args <- getArgs
   input <- BS.getContents
-  let result = do problemStr <- safeHead args
+  let result = do problemStr <- headMay args
                   problem <- selectProblem problemStr
                   return $ problem input
   case result of
@@ -26,9 +27,5 @@ selectProblem :: String -> Maybe Problem
 selectProblem "dna" = Just dna
 selectProblem "rna" = Just rna
 selectProblem "revc" = Just revc
+selectProblem "fib"  = Just fib
 selectProblem _      = Nothing
-
-
-safeHead :: [a] -> Maybe a
-safeHead [] = Nothing
-safeHead (a:_) = Just a

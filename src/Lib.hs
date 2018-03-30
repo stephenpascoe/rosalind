@@ -8,6 +8,7 @@ module Lib
   , transcribe
   , countBases
   , BaseCount(..)
+  , rabbitPairs
   ) where
 
 import qualified Data.ByteString.Lazy.Char8 as BSL
@@ -90,3 +91,10 @@ countBases (RnaSeq bases) = BS.foldl' f acc bases
       'C' -> acc { cCount = (cCount acc) + 1 }
       'G' -> acc { gCount = (gCount acc) + 1 }
       'U' -> acc { uCount = (uCount acc) + 1 }
+
+
+
+rabbitPairs :: Int -> [Int]
+rabbitPairs k = 1 : 1 : zipWith f fib (tail $ fib)
+  where fib = rabbitPairs k
+        f g1 g2 = g1 * k + g2

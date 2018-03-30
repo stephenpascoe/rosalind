@@ -19,3 +19,7 @@ main = hspec $ do
   describe "Problem REVC" $ do
     it "Solves the example problem" $ do
       revc "AAAACCCGGT" `shouldBe` "ACCGGGTTTT"
+
+  describe "Problem FIB" $ do
+    it "Solves the example problem" $ do
+      fib "5 3" `shouldBe` "19"
