@@ -10,16 +10,16 @@ main :: IO ()
 main = hspec $ do
   describe "Problem DNA" $ do
     it "Solves the example problem" $ do
-      dna "AGCTTTTCATTCTGACTGCAACGGGCAATATGTCTCTGTGTGGATTAAAAAAAGAGTGTCTGATAGCAGC" `shouldBe` "20 12 17 21"
+      dna "AGCTTTTCATTCTGACTGCAACGGGCAATATGTCTCTGTGTGGATTAAAAAAAGAGTGTCTGATAGCAGC" `shouldBe` Right "20 12 17 21"
 
   describe "Problem RNA" $ do
     it "Solves the example problem" $ do
-      rna "GATGGAACTTGACTACGTAAATT" `shouldBe` "GAUGGAACUUGACUACGUAAAUU"
+      rna "GATGGAACTTGACTACGTAAATT" `shouldBe` Right "GAUGGAACUUGACUACGUAAAUU"
 
   describe "Problem REVC" $ do
     it "Solves the example problem" $ do
-      revc "AAAACCCGGT" `shouldBe` "ACCGGGTTTT"
+      revc "AAAACCCGGT" `shouldBe` Right "ACCGGGTTTT"
 
   describe "Problem FIB" $ do
     it "Solves the example problem" $ do
-      fib "5 3" `shouldBe` "19"
+      fib "5 3" `shouldBe` Right "19"

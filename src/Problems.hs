@@ -2,6 +2,7 @@
 
 module Problems
     ( Problem
+    , Result
     , dna
     , rna
     , revc
@@ -13,42 +14,40 @@ import qualified Data.ByteString.Builder as B
 import Data.Monoid
 import Data.Maybe
 import Safe
+import qualified Data.Text as T
 
 import Lib
 
-type Problem = BS.ByteString -> BS.ByteString
+-- | A Problem takes an input stream and returns either an error message or an output stream.
+--   Streams are represented as lazy bytestrings.
+type Result = Either T.Text BS.ByteString
+type Problem = BS.ByteString -> Result
 
 dna :: Problem
-dna input = maybe "Not a DNA sequence" f (toDnaSequence input)
+dna input = case toDnaSequence input of
+  Just seq -> Right (serialise (countBases seq))
+  Nothing ->  Left "Not a DNA sequence"
   where
-    f seq = let counts = countBases seq
-            in B.toLazyByteString ( B.integerDec (aCount counts) <> " " <>
-                                    B.integerDec (cCount counts) <> " " <>
-                                    B.integerDec (gCount counts) <> " " <>
-                                    B.integerDec (tCount counts)
-                                  )
+    serialise counts = B.toLazyByteString ( B.integerDec (aCount counts) <> " " <>
+                                            B.integerDec (cCount counts) <> " " <>
+                                            B.integerDec (gCount counts) <> " " <>
+                                            B.integerDec (tCount counts)
+                                          )
 
 rna :: Problem
-rna input =
-  let
-    result = do
-      seq <- toDnaSequence input
-      return $ seqAsByteString . transcribe $ seq
-  in
-    case result of
-      Nothing -> "Something went wrong"
-      Just output -> BS.fromStrict output
+rna input = case toDnaSequence input of
+  Just seq -> Right $ BS.fromStrict . seqAsByteString $ transcribe seq
+  Nothing  -> Left "Not a DNA sequence"
 
 revc :: Problem
-revc input = let strands = BS.words input
-                 f = BS.reverse . BS.fromStrict . seqAsByteString . complement
-             in maybe "Not a Strand" f (toDnaSequence (head strands))
-
+revc input = case toDnaSequence input of
+  Just seq -> Right $ BS.reverse . BS.fromStrict . seqAsByteString . complement $ seq
+  Nothing  -> Left "Not a DNA sequence"
 
 fib :: Problem
 fib input = case resultMay of
-              Just pairs -> B.toLazyByteString $ B.intDec pairs
-              Nothing -> "ERROR"
+              Just pairs -> Right $ B.toLazyByteString . B.intDec $ pairs
+              Nothing -> Left "Parse error"
   where
     args = BS.words input
     resultMay = do

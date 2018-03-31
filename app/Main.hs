@@ -5,7 +5,9 @@ module Main where
 import System.Environment
 import Data.Maybe
 import qualified Data.ByteString.Lazy.Char8 as BS
+import qualified Data.Text.Encoding as TE
 import Safe
+
 
 import Problems
 
@@ -13,13 +15,19 @@ main :: IO ()
 main = do
   args <- getArgs
   input <- BS.getContents
-  let result = do problemStr <- headMay args
-                  problem <- selectProblem problemStr
-                  return $ problem input
-  case result of
-    Just output -> BS.putStrLn output
-    Nothing -> BS.putStrLn "Problem not recognised"
+  let problemMay = do problemStr <- headMay args
+                      selectProblem problemStr
+      result = case problemMay of
+                 Nothing      -> Left "Problem not recognised"
+                 Just problem -> problem input
+  printResult result
 
+
+printResult :: Result -> IO ()
+printResult result = case result of
+  Left error -> do BS.putStr "ERROR: "
+                   BS.putStrLn . BS.fromStrict . TE.encodeUtf8 $ error
+  Right output -> BS.putStrLn output
 
 
 
