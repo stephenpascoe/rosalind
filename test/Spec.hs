@@ -28,10 +28,13 @@ main = hspec $ do
     it "Solves the example problem" $ do
       gc gcInput `shouldBe` Right "Rosalind_0808\n60.91954"
 
-
   describe "Problem HAMM" $ do
     it "Solves the example problem" $ do
       hamm "GAGCCTACTAACGGGAT\nCATCGTAATGACGGCCT" `shouldBe` Right "7"
+
+  describe "Problem IPRB" $ do
+    it "Solves the example problem" $ do
+      iprb "2 2 2" `shouldBe` Right "0.78333336"
 
 gcInput = ">Rosalind_6404\n\
            \CCTGCGGAAGATCGGCACTAGAATAGCCAGAACCGTTTCTCTGAGGCTTCCGGCCTTCCC\n\

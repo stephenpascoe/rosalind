@@ -9,6 +9,7 @@ module Problems
     , fib
     , gc
     , hamm
+    , iprb
     ) where
 
 import qualified Data.ByteString.Lazy.Char8 as BSL
@@ -24,6 +25,7 @@ import Control.Monad
 
 import Lib
 import Lib.Fasta (parseFasta, mapSeq)
+import Lib.Inherit (mateProb)
 
 -- | A Problem takes an input stream and returns either an error message or an output stream.
 --   Streams are represented as lazy bytestrings.
@@ -87,6 +89,21 @@ hamm input = do
      Just result -> Right $ BS.pack $ show result
      Nothing     -> Left "Parser error"
 
+iprb :: Problem
+iprb input = do
+  let args = BS.words input
+  inStrs <- if (length args) < 3 then
+              Left "Not enough inputs"
+            else
+              Right $ take 3 args
+  k <- getInt (inStrs !! 0)
+  m <- getInt (inStrs !! 1)
+  n <- getInt (inStrs !! 2)
+  return $ BS.pack $ show (mateProb k m n)
+    where
+      getInt str = case BS.readInt str of
+                     Just (x, _) -> Right x
+                     Nothing     -> Left "Parse Error"
 
 -- Utilities
 
