@@ -10,11 +10,13 @@ module Lib
   , BaseCount(..)
   , rabbitPairs
   , gcContent
+  , hammingDistance
   ) where
 
 import qualified Data.ByteString.Lazy.Char8 as BSL
 import qualified Data.ByteString.Char8 as BS
 import Control.Applicative
+import Data.List
 
 import Lib.Sequence
 
@@ -89,3 +91,10 @@ gcContent seq = fromIntegral (BS.foldl' f 0 seqStr) / fromIntegral (BS.length se
                    'G' -> acc + 1
                    'C' -> acc + 1
                    _   -> acc
+
+hammingDistance :: Sequence -> Sequence -> Int
+hammingDistance seq1 seq2 = foldl' f 0 (BS.zip str1 str2)
+  where
+    str1 = seqAsByteString seq1
+    str2 = seqAsByteString seq2
+    f acc (char1, char2) = if char1 == char2 then acc else acc + 1

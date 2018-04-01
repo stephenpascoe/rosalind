@@ -37,4 +37,5 @@ selectProblem "rna" = Just rna
 selectProblem "revc" = Just revc
 selectProblem "fib"  = Just fib
 selectProblem "gc"   = Just gc
+selectProblem "hamm" = Just hamm
 selectProblem _      = Nothing

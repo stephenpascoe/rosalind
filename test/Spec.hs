@@ -29,6 +29,9 @@ main = hspec $ do
       gc gcInput `shouldBe` Right "Rosalind_0808\n60.91954"
 
 
+  describe "Problem HAMM" $ do
+    it "Solves the example problem" $ do
+      hamm "GAGCCTACTAACGGGAT\nCATCGTAATGACGGCCT" `shouldBe` Right "7"
 
 gcInput = ">Rosalind_6404\n\
            \CCTGCGGAAGATCGGCACTAGAATAGCCAGAACCGTTTCTCTGAGGCTTCCGGCCTTCCC\n\

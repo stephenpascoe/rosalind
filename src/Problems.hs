@@ -8,6 +8,7 @@ module Problems
     , revc
     , fib
     , gc
+    , hamm
     ) where
 
 import qualified Data.ByteString.Lazy.Char8 as BSL
@@ -19,6 +20,7 @@ import Safe
 import qualified Data.Text as T
 import qualified Data.Text.Encoding as TE
 import Data.List
+import Control.Monad
 
 import Lib
 import Lib.Fasta (parseFasta, mapSeq)
@@ -72,6 +74,18 @@ gc input = case parseFasta input of
 
   Left err -> Left $ T.pack err
 
+hamm :: Problem
+hamm input = do
+   let lines = BS.lines input
+       distanceMay = do
+         seqStr1 <- headMay lines
+         seqStr2 <- headMay <=< tailMay $ lines
+         seq1 <- toDnaSequence seqStr1
+         seq2 <- toDnaSequence seqStr2
+         return $ hammingDistance seq1 seq2
+   case distanceMay of
+     Just result -> Right $ BS.pack $ show result
+     Nothing     -> Left "Parser error"
 
 
 -- Utilities
