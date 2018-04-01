@@ -9,11 +9,14 @@ module Lib
   , countBases
   , BaseCount(..)
   , rabbitPairs
+  , gcContent
   ) where
 
 import qualified Data.ByteString.Lazy.Char8 as BSL
 import qualified Data.ByteString.Char8 as BS
 import Control.Applicative
+
+import Lib.Sequence
 
 data BaseCount = BaseCount { aCount :: Integer
                            , cCount :: Integer
@@ -22,30 +25,8 @@ data BaseCount = BaseCount { aCount :: Integer
                            , uCount :: Integer
                            } deriving Show
 
-data Sequence = DnaSeq BS.ByteString
-              | RnaSeq BS.ByteString
-              deriving Show
 
 
-type ProblemInput = BSL.ByteString
-
-toDnaSequence :: ProblemInput -> Maybe Sequence
-toDnaSequence bs = DnaSeq <$> _checkSequence "ATCG" bs
-toRnaSequence bs = RnaSeq <$> _checkSequence "AUCG" bs
-
-_checkSequence :: BS.ByteString -> ProblemInput -> Maybe BS.ByteString
-_checkSequence vocab bs = if BS.all check bs' then
-                            Just bs'
-                          else
-                            Nothing
-  where
-    bs' = BSL.toStrict bs
-    check char = BS.elem char vocab
-
-
-seqAsByteString :: Sequence -> BS.ByteString
-seqAsByteString (DnaSeq seq) = seq
-seqAsByteString (RnaSeq seq) = seq
 
 complement :: Sequence -> Sequence
 complement (DnaSeq seq) = DnaSeq $ BS.map f seq
@@ -98,3 +79,13 @@ rabbitPairs :: Int -> [Int]
 rabbitPairs k = 1 : 1 : zipWith f fib (tail $ fib)
   where fib = rabbitPairs k
         f g1 g2 = g1 * k + g2
+
+
+gcContent :: Sequence -> Float
+gcContent seq = fromIntegral (BS.foldl' f 0 seqStr) / fromIntegral (BS.length seqStr)
+  where
+    seqStr = seqAsByteString seq
+    f acc char = case char of
+                   'G' -> acc + 1
+                   'C' -> acc + 1
+                   _   -> acc

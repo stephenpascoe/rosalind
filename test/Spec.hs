@@ -23,3 +23,19 @@ main = hspec $ do
   describe "Problem FIB" $ do
     it "Solves the example problem" $ do
       fib "5 3" `shouldBe` Right "19"
+
+  describe "Problem gc" $ do
+    it "Solves the example problem" $ do
+      gc gcInput `shouldBe` Right "Rosalind_0808\n60.91954"
+
+
+
+gcInput = ">Rosalind_6404\n\
+           \CCTGCGGAAGATCGGCACTAGAATAGCCAGAACCGTTTCTCTGAGGCTTCCGGCCTTCCC\n\
+           \TCCCACTAATAATTCTGAGG\n\
+           \>Rosalind_5959\n\
+           \CCATCGGTAGCGCATCCTTAGTCCAATTAAGTCCCTATCCAGGCGCTCCGCCGAAGGTCT\n\
+           \ATATCCATTTGTCAGCAGACACGC\n\
+           \>Rosalind_0808\n\
+           \CCACCCTCGTGGTATGGCTAGGCATTCAGGAACCGGAGAACGCTTCAGACCAGCCCGGAC\n\
+           \TGGGAACCTGCGGGCAGTAGGTGGAAT"

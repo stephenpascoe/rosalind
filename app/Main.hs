@@ -4,7 +4,7 @@ module Main where
 
 import System.Environment
 import Data.Maybe
-import qualified Data.ByteString.Lazy.Char8 as BS
+import qualified Data.ByteString.Char8 as BS
 import qualified Data.Text.Encoding as TE
 import Safe
 
@@ -26,7 +26,7 @@ main = do
 printResult :: Result -> IO ()
 printResult result = case result of
   Left error -> do BS.putStr "ERROR: "
-                   BS.putStrLn . BS.fromStrict . TE.encodeUtf8 $ error
+                   BS.putStrLn . TE.encodeUtf8 $ error
   Right output -> BS.putStrLn output
 
 
@@ -36,4 +36,5 @@ selectProblem "dna" = Just dna
 selectProblem "rna" = Just rna
 selectProblem "revc" = Just revc
 selectProblem "fib"  = Just fib
+selectProblem "gc"   = Just gc
 selectProblem _      = Nothing
