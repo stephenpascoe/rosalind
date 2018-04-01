@@ -34,7 +34,7 @@ main = hspec $ do
 
   describe "Problem IPRB" $ do
     it "Solves the example problem" $ do
-      iprb "2 2 2" `shouldBe` Right "0.78333336"
+      iprb "2 2 2" `shouldBe` Right "0.7833333"
 
 gcInput = ">Rosalind_6404\n\
            \CCTGCGGAAGATCGGCACTAGAATAGCCAGAACCGTTTCTCTGAGGCTTCCGGCCTTCCC\n\
