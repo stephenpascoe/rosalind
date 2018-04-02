@@ -38,7 +38,7 @@ entry = Entry <$> label <*> seq
 seq = do
   seqStr <- BS.concat <$> seqLine `sepBy` eol
   -- TODO : This needs improving.  Some sequences could be either DNA or RNA
-  let seqMay = toDnaSequence seqStr <|> toRnaSequence seqStr
+  let seqMay = dnaFromByteString seqStr <|> rnaFromByteString seqStr
   case seqMay of
     Just seq -> return seq
     Nothing  -> fail "Unrecognised sequence"

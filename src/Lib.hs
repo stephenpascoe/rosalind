@@ -1,9 +1,9 @@
 {-# LANGUAGE OverloadedStrings #-}
 
 module Lib
-  ( toDnaSequence
-  , toRnaSequence
-  , seqAsByteString
+  ( dnaFromByteString
+  , rnaFromByteString
+  , toByteString
   , complement
   , transcribe
   , countBases
@@ -86,7 +86,7 @@ rabbitPairs k = 1 : 1 : zipWith f fib (tail $ fib)
 gcContent :: Sequence -> Float
 gcContent seq = fromIntegral (BS.foldl' f 0 seqStr) / fromIntegral (BS.length seqStr)
   where
-    seqStr = seqAsByteString seq
+    seqStr = toByteString seq
     f acc char = case char of
                    'G' -> acc + 1
                    'C' -> acc + 1
@@ -95,6 +95,6 @@ gcContent seq = fromIntegral (BS.foldl' f 0 seqStr) / fromIntegral (BS.length se
 hammingDistance :: Sequence -> Sequence -> Int
 hammingDistance seq1 seq2 = foldl' f 0 (BS.zip str1 str2)
   where
-    str1 = seqAsByteString seq1
-    str2 = seqAsByteString seq2
+    str1 = toByteString seq1
+    str2 = toByteString seq2
     f acc (char1, char2) = if char1 == char2 then acc else acc + 1

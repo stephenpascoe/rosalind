@@ -33,7 +33,7 @@ type Result = Either T.Text BS.ByteString
 type Problem = BS.ByteString -> Result
 
 dna :: Problem
-dna input = case toDnaSequence input of
+dna input = case dnaFromByteString input of
   Just seq -> Right (serialise (countBases seq))
   Nothing ->  Left "Not a DNA sequence"
   where
@@ -43,13 +43,13 @@ dna input = case toDnaSequence input of
                                                            B.integerDec (tCount counts)
 
 rna :: Problem
-rna input = case toDnaSequence input of
-  Just seq -> Right $ seqAsByteString $ transcribe seq
+rna input = case dnaFromByteString input of
+  Just seq -> Right $ toByteString $ transcribe seq
   Nothing  -> Left "Not a DNA sequence"
 
 revc :: Problem
-revc input = case toDnaSequence input of
-  Just seq -> Right $ BS.reverse . seqAsByteString . complement $ seq
+revc input = case dnaFromByteString input of
+  Just seq -> Right $ BS.reverse . toByteString . complement $ seq
   Nothing  -> Left "Not a DNA sequence"
 
 fib :: Problem
@@ -82,8 +82,8 @@ hamm input = do
        distanceMay = do
          seqStr1 <- headMay lines
          seqStr2 <- headMay <=< tailMay $ lines
-         seq1 <- toDnaSequence seqStr1
-         seq2 <- toDnaSequence seqStr2
+         seq1 <- dnaFromByteString seqStr1
+         seq2 <- dnaFromByteString seqStr2
          return $ hammingDistance seq1 seq2
    case distanceMay of
      Just result -> Right $ BS.pack $ show result
