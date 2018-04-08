@@ -10,6 +10,7 @@ module Problems
     , gc
     , hamm
     , iprb
+    , prot
     ) where
 
 import qualified Data.ByteString.Lazy.Char8 as BSL
@@ -26,6 +27,8 @@ import Control.Monad
 import Lib
 import Lib.Fasta (parseFasta, mapSeq)
 import Lib.Inherit (mateProb)
+import qualified Lib.Codon as Codon
+
 
 -- | A Problem takes an input stream and returns either an error message or an output stream.
 --   Streams are represented as lazy bytestrings.
@@ -104,6 +107,18 @@ iprb input = do
       getInt str = case BS.readInt str of
                      Just (x, _) -> Right x
                      Nothing     -> Left "Parse Error"
+
+prot :: Problem
+prot input =
+  let lines = BS.lines input
+      protMay = do
+        rnaStr <- headMay lines
+        rna <- rnaFromByteString rnaStr
+        return $ Codon.translate rna
+
+  in case protMay of
+    Just prot -> Right $ toByteString prot
+    Nothing   -> Left "No translation found"
 
 -- Utilities
 

@@ -36,6 +36,10 @@ main = hspec $ do
     it "Solves the example problem" $ do
       iprb "2 2 2" `shouldBe` Right "0.7833333"
 
+  describe "Problem PROT" $ do
+    it "Solves the example problem" $ do
+      prot "AUGGCCAUGGCGCCCAGAACUGAGAUCAAUAGUACCCGUAUUAACGGGUGA" `shouldBe` Right "MAMAPRTEINSTRING"
+
 gcInput = ">Rosalind_6404\n\
            \CCTGCGGAAGATCGGCACTAGAATAGCCAGAACCGTTTCTCTGAGGCTTCCGGCCTTCCC\n\
            \TCCCACTAATAATTCTGAGG\n\

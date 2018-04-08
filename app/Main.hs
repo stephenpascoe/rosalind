@@ -39,4 +39,5 @@ selectProblem "fib"  = Just fib
 selectProblem "gc"   = Just gc
 selectProblem "hamm" = Just hamm
 selectProblem "iprb" = Just iprb
+selectProblem "prot" = Just prot
 selectProblem _      = Nothing
