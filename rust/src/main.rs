@@ -15,6 +15,7 @@ fn main() -> Result<(), String> {
             Ok(1) => problems::problem_1(),
             Ok(2) => problems::problem_2(),
             Ok(3) => problems::problem_3(),
+            Ok(4) => problems::problem_4(),
             Ok(x) => Err(String::from(format!("Error, problem {} note defined", x))),
         }    
     }

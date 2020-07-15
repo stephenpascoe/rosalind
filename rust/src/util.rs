@@ -2,10 +2,13 @@
 use std::io;
 
 
-pub fn get_stdin_line() -> io::Result<String> {
+pub fn get_stdin_line() -> Result<String, String> {
     let mut input = String::new();
 
-    io::stdin().read_line(&mut input)?;
+    match io::stdin().read_line(&mut input) {
+        Ok(_) => (),
+        Err(_) => {return Err(String::from("IO Error")); }
+    }
     while input.ends_with("\n") {
         input.truncate(input.len() - 1);
     }

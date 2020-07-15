@@ -2,10 +2,7 @@ use crate::util::*;
 
 
 pub fn problem_3() -> Result<(), String>{
-    let line = match get_stdin_line() {
-        Ok(a) => a,
-        Err(_) => { return Err(String::from("IO Error")); }
-    };
+    let line = get_stdin_line()?;
 
     println!("{}", reverse_complement(&line));
 
@@ -13,10 +10,7 @@ pub fn problem_3() -> Result<(), String>{
 }
 
 pub fn problem_1() -> Result<(), String> {
-    let line = match get_stdin_line() {
-        Ok(a) => a,
-        Err(_) => { return Err(String::from("IO Error")); }
-    };
+    let line = get_stdin_line()?;
 
     println!("{} {} {} {}", 
       count_char('A', &line),
@@ -29,12 +23,24 @@ pub fn problem_1() -> Result<(), String> {
 }
 
 pub fn problem_2() -> Result<(), String> {
-    let line = match get_stdin_line() {
-        Ok(a) => a,
-        Err(_) => { return Err(String::from("IO Error")); }
-    };
+    let line = get_stdin_line()?;
 
     println!("{}", transcribe_dna(&line));
+
+    Ok(())
+}
+
+pub fn problem_4() -> Result<(), String> {
+    let line = get_stdin_line()?;
+    let nums : Vec<u32> = line.split(" ")
+                                .map(|s| s.parse())
+                                .filter_map(Result::ok)
+                                .collect();
+    if nums.len() != 2 {
+        return Err(String::from("Expected 2 numbers"))
+    }
+
+    println!("{}", fibk(nums[0], nums[1]));
 
     Ok(())
 }
