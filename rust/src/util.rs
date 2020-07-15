@@ -54,7 +54,24 @@ pub fn fibk(n: u64, k: u64) -> u64 {
     }
 }
 
+pub fn gc_content(dna: &String) -> f32 {
+    let mut gc: u32 = 0;
+    for c in dna.chars() {
+        if c == 'G' || c == 'C' {
+            gc += 1;
+        }
+    }
+    gc as f32 / dna.len() as f32
+}
+
+
 #[test]
 fn test_fibk() {
     assert_eq!(fibk(5, 3), 19);
+}
+
+#[test]
+fn test_gc_content() {
+    let gc = gc_content(&String::from("CCACCCTCGTGGTATGGCTAGGCATTCAGGAACCGGAGAACGCTTCAGACCAGCCCGGACTGGGAACCTGCGGGCAGTAGGTGGAAT"));
+    assert_eq!(gc, 0.60919540);
 }
