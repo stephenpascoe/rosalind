@@ -32,7 +32,7 @@ pub fn problem_2() -> Result<(), String> {
 
 pub fn problem_4() -> Result<(), String> {
     let line = get_stdin_line()?;
-    let nums : Vec<u32> = line.split(" ")
+    let nums : Vec<u64> = line.split(" ")
                                 .map(|s| s.parse())
                                 .filter_map(Result::ok)
                                 .collect();

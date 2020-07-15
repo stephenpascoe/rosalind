@@ -45,12 +45,12 @@ pub fn reverse_complement(dna: &String) -> String {
     compl
 }
 
-pub fn fibk(n: u32, k: u32) -> u32 {
+pub fn fibk(n: u64, k: u64) -> u64 {
     if n < 3 {
         1
     }
     else {
-        fibk(n-1, k) + 3*fibk(n-2, k)
+        fibk(n-1, k) + k*fibk(n-2, k)
     }
 }
 
