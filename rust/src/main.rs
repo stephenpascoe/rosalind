@@ -1,5 +1,6 @@
 mod util;
 mod problems;
+mod fasta;
 
 use std::env;
 
@@ -16,6 +17,11 @@ fn main() -> Result<(), String> {
             Ok(2) => problems::problem_2(),
             Ok(3) => problems::problem_3(),
             Ok(4) => problems::problem_4(),
+            Ok(5) => {
+                let eg = fasta::eg_fasta();
+                println!("{:?}", eg);
+                Ok(())
+            }
             Ok(x) => Err(String::from(format!("Error, problem {} note defined", x))),
         }    
     }
