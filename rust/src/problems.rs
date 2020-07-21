@@ -48,17 +48,16 @@ pub fn problem_4() -> Result<(), String> {
     Ok(())
 }
 
-// TODO : Use str keys in fasta.
 pub fn problem_5() -> Result<(), String> {
     let stdin = io::stdin();
     let fasta = read_fasta(stdin.lock())?;
     let (top_key, top_gc) = fasta.iter()
-                                .map(|(&k, dna)| (k, gc_content(dna)))
+                                .map(|(k, dna)| (k, gc_content(dna)))
                                 .max_by(|(_, gc1), (_, gc2)| 
                                             gc1.partial_cmp(gc2).unwrap())
                                 .unwrap();
 
-    print!("Rosalind_{}\n{}\n", top_key, top_gc * 100.0);
+    print!("{}\n{}\n", top_key, top_gc * 100.0);
 
     Ok(())
 }

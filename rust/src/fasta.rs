@@ -15,20 +15,18 @@ extern crate regex;
 
 use std::collections::HashMap;
 use std::io;
-use regex::Regex;
 
-type Fasta = HashMap<i32, String>;
+type Fasta = HashMap<String, String>;
 
 pub fn eg_fasta() -> Fasta {
     let mut eg = Fasta::new();
-    eg.insert(42, "AACCGCCATTACGGC".to_string());
-    eg.insert(924, "GGTGAAAGATCCGCATTAG".to_string());
+    eg.insert(String::from("Rosalind_42"), "AACCGCCATTACGGC".to_string());
+    eg.insert(String::from("Rosalind_924"), "GGTGAAAGATCCGCATTAG".to_string());
     eg
 }
 
 pub fn read_fasta(bufreader: impl io::BufRead) -> Result<Fasta, String> {
     let mut fasta = Fasta::new();
-    let re = Regex::new(r"Rosalind_(\d+)\n((?s).*)").unwrap();
 
     for chunk_r in bufreader.split(b'>') {
         match chunk_r {
@@ -38,11 +36,11 @@ pub fn read_fasta(bufreader: impl io::BufRead) -> Result<Fasta, String> {
                     Ok(s) => s,
                     Err(_) => { return Err("UTF Decoding error".to_string()); }
                 };
-                for cap in re.captures_iter(chunk_str) {
-                    let key: i32 = cap[1].parse().expect("Can't parse key");
-                    let sequence = cap[2].to_string().lines().collect::<Vec<_>>().concat();
-                    fasta.insert(key, sequence);
-                };
+                let parts = chunk_str.lines().collect::<Vec<_>>();
+                if parts.len() < 2 { return Err("Parse Error".to_string()); }
+                let key = String::from(parts[0]);
+                let sequence = parts[1..].concat();
+                fasta.insert(key, sequence);
             }
             Err(_) => { return Err("IO Error".to_string()); }
         }
@@ -54,12 +52,12 @@ pub fn read_fasta(bufreader: impl io::BufRead) -> Result<Fasta, String> {
 fn test_read_fasta_1() {
     let fasta_eg = ">Rosalind_42\nAACCGCCATTACGGC\n>Rosalind_924\nGGTGAAAGATCCGCATTAG\n";
     let fasta = read_fasta(io::Cursor::new(fasta_eg)).unwrap();
-    assert_eq!(fasta.get(&42).unwrap(), &"AACCGCCATTACGGC".to_string());
+    assert_eq!(fasta.get(&"Rosalind_42".to_string()).unwrap(), &"AACCGCCATTACGGC".to_string());
 }
 
 #[test]
 fn test_read_fasta_2() {
     let fasta_eg = ">Rosalind_42\nAACCGCCATTACGGC\n>Rosalind_924\nGGTGAAAGA\nTCCGCATTAG\n";
     let fasta = read_fasta(io::Cursor::new(fasta_eg)).unwrap();
-    assert_eq!(fasta.get(&924).unwrap(), &"GGTGAAAGATCCGCATTAG".to_string());
+    assert_eq!(fasta.get(&"Rosalind_924".to_string()).unwrap(), &"GGTGAAAGATCCGCATTAG".to_string());
 }
