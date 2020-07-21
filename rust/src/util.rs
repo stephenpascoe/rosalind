@@ -64,6 +64,9 @@ pub fn gc_content(dna: &String) -> f32 {
     gc as f32 / dna.len() as f32
 }
 
+pub fn hamming_distance(dna1: String, dna2: String) -> usize {
+    dna1.chars().zip(dna2.chars()).filter(|(c1, c2)| c1 != c2).count()
+}
 
 #[test]
 fn test_fibk() {

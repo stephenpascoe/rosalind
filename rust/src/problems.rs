@@ -61,3 +61,12 @@ pub fn problem_5() -> Result<(), String> {
 
     Ok(())
 }
+
+pub fn problem_6() -> Result<(), String> {
+    let dna1 = get_stdin_line()?;
+    let dna2 = get_stdin_line()?;
+
+    print!("{}\n", hamming_distance(dna1, dna2));
+
+    Ok(())
+}
