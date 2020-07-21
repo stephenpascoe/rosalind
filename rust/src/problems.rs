@@ -1,5 +1,8 @@
 use crate::util::*;
+use crate::fasta::*;
+use std::io;
 
+use std::collections::HashMap;
 
 pub fn problem_3() -> Result<(), String>{
     let line = get_stdin_line()?;
@@ -41,6 +44,25 @@ pub fn problem_4() -> Result<(), String> {
     }
 
     println!("{}", fibk(nums[0], nums[1]));
+
+    Ok(())
+}
+
+// TODO : Use str keys in fasta.
+pub fn problem_5() -> Result<(), String> {
+    let stdin = io::stdin();
+    let fasta = read_fasta(stdin.lock())?;
+
+    let mut top_key = 0;
+    let mut top_gc = -1.0;
+    for (&k, dna) in fasta.iter() {
+        let gc = gc_content(dna);
+        if gc > top_gc {
+            top_gc = gc;
+            top_key = k;
+        }
+    }
+    print!("Rosalind_{}\n{}\n", top_key, top_gc * 100.0);
 
     Ok(())
 }
