@@ -22,6 +22,7 @@ fn main() -> Result<(), String> {
             Ok(7) => problems::problem_7(),
             Ok(8) => problems::problem_8(),
             Ok(9) => problems::problem_9(),
+            Ok(10) => problems::problem_10(),
             Ok(x) => Err(String::from(format!("Error, problem {} note defined", x))),
         }    
     }

@@ -2,8 +2,9 @@ use crate::util::*;
 use crate::fasta::*;
 use std::io;
 
+type ProblemResult = Result<(), String>;
 
-pub fn problem_3() -> Result<(), String>{
+pub fn problem_3() -> ProblemResult {
     let line = get_stdin_line()?;
 
     println!("{}", reverse_complement(&line));
@@ -11,7 +12,7 @@ pub fn problem_3() -> Result<(), String>{
     Ok(())
 }
 
-pub fn problem_1() -> Result<(), String> {
+pub fn problem_1() -> ProblemResult {
     let line = get_stdin_line()?;
 
     println!("{} {} {} {}", 
@@ -24,7 +25,7 @@ pub fn problem_1() -> Result<(), String> {
     Ok(())
 }
 
-pub fn problem_2() -> Result<(), String> {
+pub fn problem_2() -> ProblemResult {
     let line = get_stdin_line()?;
 
     println!("{}", transcribe_dna(&line));
@@ -32,7 +33,7 @@ pub fn problem_2() -> Result<(), String> {
     Ok(())
 }
 
-pub fn problem_4() -> Result<(), String> {
+pub fn problem_4() -> ProblemResult {
     let line = get_stdin_line()?;
     let nums : Vec<u64> = line.split(" ")
                                 .map(|s| s.parse())
@@ -47,7 +48,7 @@ pub fn problem_4() -> Result<(), String> {
     Ok(())
 }
 
-pub fn problem_5() -> Result<(), String> {
+pub fn problem_5() -> ProblemResult {
     let stdin = io::stdin();
     let fasta = read_fasta(stdin.lock())?;
     let (top_key, top_gc) = fasta.iter()
@@ -61,7 +62,7 @@ pub fn problem_5() -> Result<(), String> {
     Ok(())
 }
 
-pub fn problem_6() -> Result<(), String> {
+pub fn problem_6() -> ProblemResult {
     let dna1 = get_stdin_line()?;
     let dna2 = get_stdin_line()?;
 
@@ -70,7 +71,7 @@ pub fn problem_6() -> Result<(), String> {
     Ok(())
 }
 
-pub fn problem_7() -> Result<(), String> {
+pub fn problem_7() -> ProblemResult {
     let vec = get_stdin_line()?.split(" ")
                 .map(|x| x.parse::<u64>().expect("failed to parse"))
                 .collect::<Vec<u64>>();
@@ -82,7 +83,7 @@ pub fn problem_7() -> Result<(), String> {
     Ok(())
 }
 
-pub fn problem_8() -> Result<(), String> {
+pub fn problem_8() -> ProblemResult {
     let s = get_stdin_line()?;
     let t = get_stdin_line()?;
 
@@ -96,13 +97,23 @@ pub fn problem_8() -> Result<(), String> {
     Ok(())
 }
 
-pub fn problem_9() -> Result<(), String> {
+pub fn problem_9() -> ProblemResult {
     let stdin = io::stdin();
     let fasta = read_fasta(stdin.lock())?;
 
     let pm = profile_matrix(fasta)?;
     println!("{}", pm.consensus());
     pm.print();
+
+    Ok(())
+}
+
+pub fn problem_10() -> ProblemResult {
+    let vec = get_stdin_line()?.split(" ")
+                .map(|x| x.parse::<u32>().expect("failed to parse"))
+                .collect::<Vec<u32>>();
+
+    println!("{}", mortal_fib(vec[0], vec[1]));
 
     Ok(())
 }

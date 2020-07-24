@@ -55,6 +55,30 @@ pub fn fibk(n: u64, k: u64) -> u64 {
     }
 }
 
+/*  Calculate the number of rabit pairs after n months, starting from 1 pair, where each pair lives m months.
+
+    This function needs to scale up to fib(100) which will require dynamic programming.  
+    Fn = Fn-1 + Fn-2 - Fn-3
+
+*/
+pub fn mortal_fib(n: u32, m: u32) -> u32 {
+    let mut fibn = vec![0; n as usize + 1];
+    fibn[0] = 1; fibn[1] = 1; 
+    
+    fn fib(n: u32, m: u32, fibn: &Vec<u32>) -> u32 {
+        if fibn[n as usize - 1] != 0 { fibn[n as usize - 1] }
+        else if n > m {
+            fib(n-1, m, fibn) + fib(n-2, m, fibn) - fib(n-m, m, fibn)
+        }
+        else {
+            fib(n-1, m, fibn) + fib(n-2, m, fibn)
+        }
+    }
+
+    fib(n+1, m, &fibn)
+}
+
+
 pub fn gc_content(dna: &String) -> f32 {
     let mut gc: u32 = 0;
     for c in dna.chars() {
@@ -95,4 +119,14 @@ fn test_gc_content() {
 #[test]
 fn test_mate_prob() {
     assert!(mate_prob(2 , 2, 2) - 0.78333 < 0.00001);
+}
+
+#[test]
+fn test_mortal_fib() {
+    assert_eq!(mortal_fib(6, 3), 4);
+}
+
+#[test]
+fn test_mortal_fib2() {
+    assert_eq!(mortal_fib(7, 3), 5);
 }
