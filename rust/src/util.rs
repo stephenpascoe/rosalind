@@ -1,5 +1,6 @@
 
 use std::io;
+use statrs::function::factorial::binomial;
 
 
 pub fn get_stdin_line() -> Result<String, String> {
@@ -68,6 +69,18 @@ pub fn hamming_distance(dna1: String, dna2: String) -> usize {
     dna1.chars().zip(dna2.chars()).filter(|(c1, c2)| c1 != c2).count()
 }
 
+/* Return the probability of a dominant allene being present for a random mating pair
+   given the populations of different allene types
+*/
+pub fn mate_prob(k: u64, m: u64, n: u64) -> f64 {
+    let total = k + m + n;
+    let rr = binomial(n, 2) / binomial(total, 2);
+    let hh = binomial(m, 2) / binomial(total, 2);
+    let hr = (binomial(n, 1) * binomial(m, 1)) / binomial(total, 2);
+
+    1.0 - (rr + hh * 0.25 + hr * 0.5)
+}
+
 #[test]
 fn test_fibk() {
     assert_eq!(fibk(5, 3), 19);
@@ -77,4 +90,9 @@ fn test_fibk() {
 fn test_gc_content() {
     let gc = gc_content(&String::from("CCACCCTCGTGGTATGGCTAGGCATTCAGGAACCGGAGAACGCTTCAGACCAGCCCGGACTGGGAACCTGCGGGCAGTAGGTGGAAT"));
     assert_eq!(gc, 0.60919540);
+}
+
+#[test]
+fn test_mate_prob() {
+    assert!(mate_prob(2 , 2, 2) - 0.78333 < 0.00001);
 }

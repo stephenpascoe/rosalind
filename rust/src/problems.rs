@@ -70,3 +70,15 @@ pub fn problem_6() -> Result<(), String> {
 
     Ok(())
 }
+
+pub fn problem_7() -> Result<(), String> {
+    let vec = get_stdin_line()?.split(" ")
+                .map(|x| x.parse::<u64>().expect("failed to parse"))
+                .collect::<Vec<u64>>();
+    if vec.len() != 3 { return Err(String::from("Expected 3 arguments")); }
+
+    let result = mate_prob(vec[0], vec[1], vec[2]);
+    println!("{}", result);
+
+    Ok(())
+}
