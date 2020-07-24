@@ -1,6 +1,7 @@
 use crate::util::*;
 use crate::fasta::*;
 use std::io;
+use regex::Regex;
 
 use std::collections::HashMap;
 
@@ -79,6 +80,20 @@ pub fn problem_7() -> Result<(), String> {
 
     let result = mate_prob(vec[0], vec[1], vec[2]);
     println!("{}", result);
+
+    Ok(())
+}
+
+pub fn problem_8() -> Result<(), String> {
+    let s = get_stdin_line()?;
+    let t = get_stdin_line()?;
+
+    for i in 0..s.len() {
+        if s[i..].starts_with(&t) {
+            print!("{} ", i+1);
+        }
+    }
+    println!("");
 
     Ok(())
 }
