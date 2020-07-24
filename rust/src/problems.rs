@@ -1,9 +1,7 @@
 use crate::util::*;
 use crate::fasta::*;
 use std::io;
-use regex::Regex;
 
-use std::collections::HashMap;
 
 pub fn problem_3() -> Result<(), String>{
     let line = get_stdin_line()?;
@@ -94,6 +92,17 @@ pub fn problem_8() -> Result<(), String> {
         }
     }
     println!("");
+
+    Ok(())
+}
+
+pub fn problem_9() -> Result<(), String> {
+    let stdin = io::stdin();
+    let fasta = read_fasta(stdin.lock())?;
+
+    let pm = profile_matrix(fasta)?;
+    println!("{}", pm.consensus());
+    pm.print();
 
     Ok(())
 }
