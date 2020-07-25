@@ -57,19 +57,16 @@ pub fn fibk(n: u64, k: u64) -> u64 {
 
 /*  Calculate the number of rabit pairs after n months, starting from 1 pair, where each pair lives m months.
     Record the number of pares of each generation, mutate until generation n calculated.
-
 */
 pub fn mortal_fib(n: u32, m: u32) -> u64 {
-    let mut fibq: VecDeque<u64> = vec![1, 1].into_iter()
-                                    .chain(vec![0; m as usize - 2].into_iter())
-                                    .collect();
-    for _i in 1..n-2 {
+    let mut fibq: VecDeque<u64> = vec![0; m as usize - 1].into_iter().collect();
+    fibq.push_front(1);
+    for _i in 1..n {
         // All generations after first reproduce
         fibq.push_front(fibq.iter().skip(1).sum());
-        // Oldest generation generation die
+        // Oldest generation generation dies
         fibq.pop_back();
     }
-    fibq.pop_back();
     fibq.iter().sum()
 }
 
