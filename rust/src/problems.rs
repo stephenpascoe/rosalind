@@ -6,15 +6,8 @@ use std::io;
 
 type ProblemResult = Result<(), String>;
 
-pub fn problem_3() -> ProblemResult {
-    let line = get_stdin_line()?;
 
-    println!("{}", reverse_complement(&line));
-
-    Ok(())
-}
-
-pub fn problem_1() -> ProblemResult {
+pub fn problem_dna() -> ProblemResult {
     let line = get_stdin_line()?;
 
     println!("{} {} {} {}", 
@@ -27,7 +20,7 @@ pub fn problem_1() -> ProblemResult {
     Ok(())
 }
 
-pub fn problem_2() -> ProblemResult {
+pub fn problem_rna() -> ProblemResult {
     let line = get_stdin_line()?;
 
     println!("{}", transcribe_dna(&line));
@@ -35,7 +28,16 @@ pub fn problem_2() -> ProblemResult {
     Ok(())
 }
 
-pub fn problem_4() -> ProblemResult {
+pub fn problem_revc() -> ProblemResult {
+    let line = get_stdin_line()?;
+
+    println!("{}", reverse_complement(&line));
+
+    Ok(())
+}
+
+
+pub fn problem_fib() -> ProblemResult {
     let line = get_stdin_line()?;
     let nums : Vec<u64> = line.split(" ")
                                 .map(|s| s.parse())
@@ -50,7 +52,7 @@ pub fn problem_4() -> ProblemResult {
     Ok(())
 }
 
-pub fn problem_5() -> ProblemResult {
+pub fn problem_gc() -> ProblemResult {
     let stdin = io::stdin();
     let fasta = read_fasta(stdin.lock())?;
     let (top_key, top_gc) = fasta.iter()
@@ -64,7 +66,7 @@ pub fn problem_5() -> ProblemResult {
     Ok(())
 }
 
-pub fn problem_6() -> ProblemResult {
+pub fn problem_hamm() -> ProblemResult {
     let dna1 = get_stdin_line()?;
     let dna2 = get_stdin_line()?;
 
@@ -73,7 +75,7 @@ pub fn problem_6() -> ProblemResult {
     Ok(())
 }
 
-pub fn problem_7() -> ProblemResult {
+pub fn problem_iprb() -> ProblemResult {
     let vec = get_stdin_line()?.split(" ")
                 .map(|x| x.parse::<u64>().expect("failed to parse"))
                 .collect::<Vec<u64>>();
@@ -85,7 +87,9 @@ pub fn problem_7() -> ProblemResult {
     Ok(())
 }
 
-pub fn problem_8() -> ProblemResult {
+// TODO : PROT missing
+
+pub fn problem_subs() -> ProblemResult {
     let s = get_stdin_line()?;
     let t = get_stdin_line()?;
 
@@ -99,7 +103,7 @@ pub fn problem_8() -> ProblemResult {
     Ok(())
 }
 
-pub fn problem_9() -> ProblemResult {
+pub fn problem_cons() -> ProblemResult {
     let stdin = io::stdin();
     let fasta = read_fasta(stdin.lock())?;
 
@@ -110,7 +114,7 @@ pub fn problem_9() -> ProblemResult {
     Ok(())
 }
 
-pub fn problem_10() -> ProblemResult {
+pub fn problem_fibd() -> ProblemResult {
     let vec = get_stdin_line()?.split(" ")
                 .map(|x| x.parse::<u32>().expect("failed to parse"))
                 .collect::<Vec<u32>>();
@@ -120,7 +124,7 @@ pub fn problem_10() -> ProblemResult {
     Ok(())
 }
 
-pub fn problem_11() -> ProblemResult {
+pub fn problem_grpy() -> ProblemResult {
     let stdin = io::stdin();
     let fasta = read_fasta(stdin.lock())?;
 
