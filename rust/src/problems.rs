@@ -1,6 +1,8 @@
 use crate::util::*;
+use crate::graph::*;
 use crate::fasta::*;
 use std::io;
+
 
 type ProblemResult = Result<(), String>;
 
@@ -114,6 +116,17 @@ pub fn problem_10() -> ProblemResult {
                 .collect::<Vec<u32>>();
 
     println!("{}", mortal_fib(vec[0], vec[1]));
+
+    Ok(())
+}
+
+pub fn problem_11() -> ProblemResult {
+    let stdin = io::stdin();
+    let fasta = read_fasta(stdin.lock())?;
+
+    for (src, dest) in overlap_edges(&fasta, 3) {
+        println!("{} {}", src, dest)
+    }
 
     Ok(())
 }

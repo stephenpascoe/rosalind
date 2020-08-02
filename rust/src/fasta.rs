@@ -17,7 +17,7 @@ use std::collections::HashMap;
 use std::io;
 use std::cmp::max;
 
-type Fasta = HashMap<String, String>;
+pub type Fasta = HashMap<String, String>;
 
 
 pub struct ProfileMatrix {

@@ -1,5 +1,6 @@
 mod util;
 mod problems;
+mod graph;
 mod fasta;
 
 use std::env;
@@ -23,6 +24,7 @@ fn main() -> Result<(), String> {
             Ok(8) => problems::problem_8(),
             Ok(9) => problems::problem_9(),
             Ok(10) => problems::problem_10(),
+            Ok(11) => problems::problem_11(),
             Ok(x) => Err(String::from(format!("Error, problem {} note defined", x))),
         }    
     }
