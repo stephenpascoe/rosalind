@@ -39,17 +39,13 @@ impl <'a> Iterator for AdjacencyIter<'a> {
                 let dest = &self.items[dest_j];
 
                 if src.suffix == dest.prefix {
-                    // Manually incremement loop counters and store before returning
-                    if dest_j == self.items.len() - 1 {
-                        self.src_i = src_j + 1;
-                        self.dest_i = 0;
-                    } 
-                    else {
-                        self.dest_i = dest_j + 1;    
-                    }
+                    // Manually incremement loop counter and store before returning
+                    self.src_i = src_j;
+                    self.dest_i = dest_j + 1;
                     return Some((src.key, dest.key));
                 }
             }
+            self.dest_i = 0;
         }
         None
     }
