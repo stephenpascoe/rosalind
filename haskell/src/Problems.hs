@@ -11,6 +11,7 @@ module Problems
     , hamm
     , iprb
     , prot
+    , subs
     ) where
 
 import qualified Data.ByteString.Lazy.Char8 as BSL
@@ -119,6 +120,17 @@ prot input =
   in case protMay of
     Just prot -> Right $ toByteString prot
     Nothing   -> Left "No translation found"
+
+subs :: Problem
+subs input = do  
+  let lines = BS.lines input
+  dnaS <- maybe (Left "No string found") Right $ headMay lines
+  dnaT <- maybe (Left "No string found") Right $ headMay <=< tailMay $ lines
+  return $ BS.intercalate " " $ map (BS.pack . show) $ subs1 dnaS dnaT
+    where
+      subs1 a b = map fst $ filter findPrefix $ zip [1..] (BS.tails a)
+        where findPrefix (i, a') = BS.isPrefixOf b a'
+
 
 -- Utilities
 

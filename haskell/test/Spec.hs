@@ -40,6 +40,10 @@ main = hspec $ do
     it "Solves the example problem" $ do
       prot "AUGGCCAUGGCGCCCAGAACUGAGAUCAAUAGUACCCGUAUUAACGGGUGA" `shouldBe` Right "MAMAPRTEINSTRING"
 
+  describe "Problem SUBS" $ do
+    it "Solves the example problem" $ do
+      subs "GATATATGCATATACTT\nATAT" `shouldBe` Right "2 4 10"
+
 gcInput = ">Rosalind_6404\n\
            \CCTGCGGAAGATCGGCACTAGAATAGCCAGAACCGTTTCTCTGAGGCTTCCGGCCTTCCC\n\
            \TCCCACTAATAATTCTGAGG\n\
