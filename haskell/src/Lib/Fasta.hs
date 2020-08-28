@@ -4,6 +4,8 @@
 module Lib.Fasta ( parseFasta
                  , mapSeq
                  , Entry(..)
+                 , Fasta
+                 , entries
                  )
 where
 
@@ -21,7 +23,7 @@ import Lib.Sequence
 -- | For the moment we model the contents of a Fasta file as a list of pairs
 
 data Entry = Entry T.Text Sequence deriving Show
-newtype Fasta = Fasta [Entry] deriving Show
+newtype Fasta = Fasta {entries :: [Entry]} deriving Show
 
 
 -- Parsing FASTA files
